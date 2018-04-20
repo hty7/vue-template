@@ -104,13 +104,15 @@ $ npm test
 通过抽取业务逻辑相同的模块全局注册，任何新创建的Vue根实例模板可以使用
 
 main.js
-
+```js
     import SectionContent from '@/components/SectionContent'
     Vue.component('section-content', SectionContent)
+```
 
 业务组件
-     
+```html
     <section-content></section-content>
+```
 
 #### 自定义局部组件
 如自定义地图组件、可视化组件
@@ -118,13 +120,14 @@ main.js
 [学习更多（vue地图可视化）](https://segmentfault.com/a/1190000014337634)
 
 
-### directives 自定义指令
+### 🐦 directives 自定义指令
 
 官方详细文档：[https://cn.vuejs.org/v2/guide/custom-directive.html](https://cn.vuejs.org/v2/guide/custom-directive.html)
 
 通过directive就可以在Vue上注册指令
 
 #### 注册一个全局自定义指令 `v-focus`
+```js
     Vue.directive('focus', {
     // 当被绑定的元素插入到 DOM 中时……
     inserted: function (el) {
@@ -132,8 +135,8 @@ main.js
         el.focus()
     }
     })
-
-#### 🐦 指令模块化
+```
+#### 指令模块化
  [学习更多 v-stealth元素显示隐藏](https://segmentfault.com/a/1190000014370906)
 
 例如：我们的想法是注册一个指令，通过给钩子函数传递参数true 或 false去改变节点的display的值
@@ -141,9 +144,8 @@ main.js
 ![](https://github.com/hty7/picture/blob/master/directives.png)
 
 stealth.js
-
-元素隐藏显示指令
-
+```js
+    // 元素隐藏显示指令
     export default {
       // 只调用一次，指令第一次绑定到元素时调用
       bind (el, binding, vnode) {
@@ -166,49 +168,50 @@ stealth.js
     	console.log('unbind')
       }
     }
+```
 指令模块化，通过index.js管理自定义指令。添加新指令只需在modules中加入模块，并引入
 
 index.js
-
+```js
     import stealth from './modules/stealth'
     export {stealth}
-
+```
 全局Vue中通过directive绑定全部指令
 
 mian.js
-
+```js
     import * as directives from './directives'
     // 注册指令
     Object.keys(directives).forEach(k => Vue.directive(k, directives[k]))
-
+```
 业务组件中，加入v-*(指令名)
-
+```html
     <div v-stealth="true"></div>
-
+```
 ### 📦 filters 自定义过滤器
 
 使用自定义的原因是后端获取的数据不一定满足前端文本格式化显示的要求，因此需要对数据进行二次
 
 index.js
-
-// 字符串转化为数值
-
+```js
+	// 字符串转化为数值
 	export const toNumber = value ={
 		if (value) return parseInt(value)
 		return ''
 	}
-
+```
 全局Vue中通过filter注册过滤器
 
 main.js
-
+```js
     import * as filters from './filters'
     Object.keys(filters).forEach(k => Vue.filter(k, filters[k]))
-
+```
 业务页面中使用双花括号插值和 v-bind 表达式使用
-
+```html
     <!-- 在双花括号中 -->
     {{ message | toNumber }}
     
     <!-- 在 `v-bind` 中 -->
     <div v-bind:id="rawId | toNumber"></div>
+```
