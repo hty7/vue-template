@@ -1,7 +1,7 @@
 {
-  "name": "VUE-PC",
+  "name": "VUE-MOBILE",
   "version": "1.0.0",
-  "description": "A Vue template for pc",
+  "description": "A Vue template for mobile",
   "author": "YJ <1553937164@qq.com>",
   "private": true,
   "scripts": {

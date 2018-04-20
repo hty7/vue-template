@@ -1,26 +1,25 @@
 <template>
   <v-app id="inspire" :dark="controlsOption.hints">
-    <Vheader></Vheader>
-    <Vmenu></Vmenu>
+    <my-header></my-header>
     <v-content>
-      <v-container fluid>
-        <v-fade-transition mode="out-in">
-          <router-view></router-view>
-        </v-fade-transition>
+      <v-container>
+        <router-view/>
       </v-container>
     </v-content>
+    <my-footer></my-footer>
   </v-app>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
-import Vheader from './children/header'
-import Vmenu from './children/menu'
+import MyHeader from './children/header'
+import MyFooter from './children/footer'
 export default {
   components: {
-    Vheader, Vmenu
+    MyFooter, MyHeader
   },
-  data: () => ({}),
+  data: () => ({
+  }),
   computed: {
     ...mapGetters(['controlsOption'])
   },

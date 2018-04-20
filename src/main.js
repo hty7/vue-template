@@ -14,7 +14,6 @@ import * as filters from './filters'
 import * as methods from './utils/utils'
 import 'vuetify/dist/vuetify.min.css'
 import './plugins/toast/toast.css'
-import SectionContent from '@/components/SectionContent'
 /* 平台国际语言静态字典 */
 import LangEn from './lang/en'
 import LangZhCHS from './lang/zhCHS'
@@ -42,7 +41,6 @@ const i18n = new VueI18n({
 })
 
 // 注册全局组件
-Vue.component('section-content', SectionContent)
 
 // 注册指令&&过滤器&&公有方法
 Object.keys(directives).forEach(k => Vue.directive(k, directives[k]))

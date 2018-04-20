@@ -59,7 +59,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/vue-pc/',
+    assetsPublicPath: '/vue-mobile/',
 
     /**
      * Source Maps

@@ -1,129 +1,51 @@
 <template>
-  <v-toolbar app fixed clipped-left>
-    <v-toolbar-side-icon @click.stop="drawer"></v-toolbar-side-icon>
-    <v-toolbar-title>{{$t('optionMessage.systemName')}}</v-toolbar-title>
+  <v-toolbar app fixed dark clipped-left color="primary">
+    <v-avatar class="blue lighten-3" size="30" @click="toSetting">
+      <v-icon dark>account_circle</v-icon>
+    </v-avatar>
+    <v-toolbar-title style="font-size: 15px">1881425697</v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-badge overlap color="red">
-      <span slot="badge">3</span>
-      <v-avatar class="indigo">
-        <v-icon dark>account_circle</v-icon>
-      </v-avatar>
-    </v-badge>
-    <v-menu :close-on-content-click="false" :nudge-width="200" v-model="menu">
-      <v-btn flat small slot="activator">{{$t('optionMessage.admin')}}</v-btn>
-      <v-card>
-        <v-expansion-panel>
-          <v-expansion-panel-content hide-actions>
-            <div slot="header">super admin</div>
-            <v-card>
-              <v-card-text>This is a super administrator account</v-card-text>
-            </v-card>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-        <v-list>
-          <v-list-tile avatar>
-            <v-list-tile-avatar>
-              <v-avatar class="indigo">
-                <v-icon dark>account_circle</v-icon>
-              </v-avatar>
-            </v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>John YJ</v-list-tile-title>
-              <v-list-tile-sub-title>Front-end development engineer</v-list-tile-sub-title>
-            </v-list-tile-content>
-            <v-list-tile-action>
-              <v-btn icon :class="fav ? 'red--text' : ''" @click="setLove">
-                <v-icon>favorite</v-icon>
-              </v-btn>
-            </v-list-tile-action>
-          </v-list-tile>
-        </v-list>
-        <v-divider></v-divider>
-        <v-list>
-          <v-list-tile>
-            <v-list-tile-action>
-              <v-switch v-model="message" color="purple"></v-switch>
-            </v-list-tile-action>
-            <v-list-tile-title>{{$t('optionMessage.pushButton')}}</v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile>
-            <v-list-tile-action>
-              <v-switch v-model="hints" color="purple"></v-switch>
-            </v-list-tile-action>
-            <v-list-tile-title>{{$t('optionMessage.hints')}} ({{hints?$t('optionMessage.skin1'):$t('optionMessage.skin2')}})</v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile>
-            {{$t('optionMessage.lang')}}：
-            <v-btn-toggle mandatory v-model="icon">
-              <v-btn flat value="zh">
-                <span>中文</span>
-                <v-icon>format_align_left</v-icon>
-              </v-btn>
-              <v-btn flat value="en">
-                <span>English</span>
-                <v-icon>
-                  format_color_text
-                </v-icon>
-              </v-btn>
-            </v-btn-toggle>
-          </v-list-tile>
-        </v-list>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn flat @click="menu = false">{{$t('buttom.cancel')}}</v-btn>
-          <v-btn color="primary" flat @click="signOut">{{$t('buttom.signOut')}}</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-menu>
+    <v-bottom-sheet v-model="sheet">
+      <v-btn slot="activator" icon>
+        <v-icon>more_vert</v-icon>
+      </v-btn>
+      <v-list>
+        <v-subheader>Setting</v-subheader>
+        <v-list-tile v-for="item in items" :key="item.title" @click="mounted(item.mode)">
+          <v-list-tile-avatar>
+            <v-avatar size="32px" tile>
+              <v-icon color="grey lighten-3">info</v-icon>
+            </v-avatar>
+          </v-list-tile-avatar>
+          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-bottom-sheet>
   </v-toolbar>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
 export default {
   data: () => ({
-    icon: 'zh',
-    fav: true,
-    menu: false,
-    message: true,
-    hints: false
+    sheet: false,
+    items: [
+      { title: '退出登陆', mode: 'signOut' },
+      { title: 'Google+' }
+    ]
   }),
-  watch: {
-    hints (val) {
-      this.$store.commit('SET_CONTROLSOPTION', {hints: val})
-    },
-    icon (val) {
-      this.$i18n.locale = val
-      this.setLocalStorage('I18N_LANG', val)
-    }
-  },
-  created () {
-    let lang = this.getLocalStorage('I18N_LANG')
-    if (lang) {
-      this.icon = lang
-    } else {
-      let defaultLang = this.getNavigatorLang()
-      this.setLocalStorage('I18N_LANG', defaultLang)
-      this.icon = defaultLang
-    }
-  },
-  computed: {
-    ...mapGetters(['controlsOption'])
-  },
   methods: {
-    drawer () {
-      this.$store.commit('SET_CONTROLSOPTION', {drawer: !this.controlsOption.drawer})
+    toSetting () {
+      this.$router.push({path: '/setting'})
     },
-    setLove () {
-      this.fav = !this.fav
-      if (this.fav) {
-        this.setLocalStorage('user', {name: 'YJ', tel: '110'})
-      } else {
-        this.removeLocalStorage('user')
+    mounted (el) {
+      switch (el) {
+        case 'signOut':
+          return this.signOut()
+        default:
+          return ''
       }
     },
     signOut () {
-      this.menu = false
       this.$router.push({path: '/login'})
       this.$toast('退出登陆成功')
     }

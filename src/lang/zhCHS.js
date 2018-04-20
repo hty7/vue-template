@@ -11,7 +11,6 @@ module.exports = {
     rememberPW: '记住密码'
   },
   optionMessage: {
-    systemName: '后台管理系统',
     admin: '管理员',
     pushButton: '接受推送',
     hints: '切换皮肤',
@@ -19,7 +18,6 @@ module.exports = {
     skin2: '象牙白',
     lang: '语言',
     zh: '简体中文',
-    zhCHT: '繁体中文',
     en: '英文'
   },
   message: {
@@ -30,8 +28,8 @@ module.exports = {
     date: '日期'
   },
   routers: [
-    {path: 'home', router: true, title: '主页', icon: 'home', color: 'orange darken-2'},
-    {path: 'location', router: true, title: '列表', icon: 'transfer_within_a_station', color: 'blue'},
-    {path: 'announcement', router: true, title: '公告', icon: 'record_voice_over', color: 'purple'}
+    {path: 'business', router: true, title: '业务办理', icon: 'hot_tub'},
+    {path: 'home', router: true, title: '主页', icon: 'home'},
+    {path: 'user', router: true, title: '我的', icon: 'perm_identity'}
   ]
 }

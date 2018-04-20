@@ -1,8 +1,8 @@
 <template>
   <v-app  style="text-align: left;">
     <v-layout row>
-      <v-flex xs6 sm4 offset-sm4>
-        <v-card>
+      <v-flex xs12 sm4 offset-sm4>
+        <v-card height="100%">
           <v-card-media src="/static/images/login_bg.jpg" height="220px"></v-card-media>
           <v-card-title  primary-title>
             <div class="headline">后台管理系统登陆</div>
@@ -15,8 +15,10 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
+            <v-btn block round color="primary" dark @click.native="login">{{$t('buttom.login')}}</v-btn>
+          </v-card-actions>
+          <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn round color="primary" dark @click.native="login">{{$t('buttom.login')}}</v-btn>
             <v-btn flat round color="primary">{{$t('buttom.registered')}}</v-btn>
           </v-card-actions>
         </v-card>
